@@ -382,7 +382,7 @@ public class IRBuilder implements Disposable {
         return new IRValue(LLVMBuildURem(handle, left.getHandle(), right.getHandle(), ""));
     }
 
-    public IRValue call(IRFunctionType type, IRFunction function, List<IRValue> arguments, String name) {
+    public IRValue call(IRFunctionType type, IRValue function, List<IRValue> arguments, String name) {
         PointerPointer<Pointer> args = new PointerPointer<>(arguments.size());
         for (int i = 0; i < arguments.size(); i++) {
             args.put(i, arguments.get(i).getHandle());

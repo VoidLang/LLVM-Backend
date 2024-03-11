@@ -39,10 +39,8 @@ public class ArrayTest {
 
         LLVMTypeRef i32ArrayType = LLVMArrayType(i32Type, arraySize);
 
-
         // allocate an array on the stack
         LLVMValueRef array = LLVMBuildAlloca(builder, i32ArrayType, "array");
-
 
         LLVMValueRef[] values = {
             LLVMConstInt(i32Type, 10, 0),
@@ -58,13 +56,16 @@ public class ArrayTest {
         }
 
         // dynamically resolve array index pointer using a value from the stack
+        LLVMValueRef dynamicIndex = LLVMConstInt(i32Type, 4, 0);
+
         LLVMValueRef pointer = LLVMBuildGEP2(
             builder, i32ArrayType, array,
             new PointerPointer<>(
-                LLVMConstInt(i32Type, 0, 0),
-                LLVMConstInt(i32Type, 4, 0)
+                LLVMConstInt(i32Type, 0, 0), // I have no idea
+                dynamicIndex // the array index
             ),
-            2, "index"
+            2, // because below are two indices
+            "index"
         );
 
         // LLVMValueRef pointer = LLVMBuildStructGEP2(builder, i32ArrayType, array, 1, "ptr");

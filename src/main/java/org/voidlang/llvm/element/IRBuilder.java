@@ -382,7 +382,7 @@ public class IRBuilder implements Disposable {
         return new IRValue(LLVMBuildURem(handle, left.getHandle(), right.getHandle(), ""));
     }
 
-    public IRValue call(IRFunctionType type, IRValue function, List<IRValue> arguments, String name) {
+    public IRValue call(IRType type, IRValue function, List<IRValue> arguments, String name) {
         PointerPointer<Pointer> args = new PointerPointer<>(arguments.size());
         for (int i = 0; i < arguments.size(); i++) {
             args.put(i, arguments.get(i).getHandle());
@@ -426,6 +426,22 @@ public class IRBuilder implements Disposable {
 
     public IRValue structMemberPointer(IRType type, IRValue instance, int memberIndex, String name) {
         return new IRValue(LLVMBuildStructGEP2(handle, type.getHandle(), instance.getHandle(), memberIndex, name));
+    }
+
+    public IRValue structMemberPointer(IRType type, IRValue instance, int memberIndex) {
+        return structMemberPointer(type, instance, memberIndex, "");
+    }
+
+    public IRValue elementPointer(IRType type, IRValue instance, List<IRValue> indices, String name) {
+        PointerPointer<Pointer> args = new PointerPointer<>(indices.size());
+        for (int i = 0; i < indices.size(); i++)
+            args.put(i, indices.get(i).getHandle());
+
+        return new IRValue(LLVMBuildGEP2(handle, type.getHandle(), instance.getHandle(), args, indices.size(), name));
+    }
+
+    public IRValue elementPointer(IRType type, IRValue instance, List<IRValue> indices) {
+        return elementPointer(type, instance, indices, "");
     }
 
     public IRValue store(IRValue value, IRValue pointer) {

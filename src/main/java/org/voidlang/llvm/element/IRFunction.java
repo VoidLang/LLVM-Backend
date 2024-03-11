@@ -28,7 +28,7 @@ public class IRFunction extends IRValue {
         return name;
     }
 
-    public IRType getType() {
+    public IRFunctionType getType() {
         return type;
     }
 

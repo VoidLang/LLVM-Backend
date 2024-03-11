@@ -35,4 +35,12 @@ public class IRFunction extends IRValue {
     public static IRFunction create(IRModule module, String name, IRFunctionType type) {
         return new IRFunction(LLVMAddFunction(module.getHandle(), name, type.getHandle()), module, name, type);
     }
+
+    public static IRFunction getByName(IRModule module, String name, IRFunctionType type) {
+        LLVMValueRef handle = LLVMGetNamedFunction(module.getHandle(), name);
+        if (handle == null)
+            return null;
+
+        return new IRFunction(handle, module, name, type);
+    }
 }

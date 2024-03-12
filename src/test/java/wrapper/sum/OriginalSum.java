@@ -49,8 +49,8 @@ public class OriginalSum {
         LLVMPositionBuilderAtEnd(builder, mainEntry);
 
         PointerPointer<Pointer> mArgs = new PointerPointer<>(2)
-                .put(0, LLVMConstInt(returnType, 10, 0))
-                .put(1, LLVMConstInt(returnType, 20, 0));
+            .put(0, LLVMConstInt(returnType, 10, 0))
+            .put(1, LLVMConstInt(returnType, 20, 0));
 
         LLVMValueRef res = LLVMBuildCall2(builder, functionType, sumFunction, mArgs, 2, "call_res");
         LLVMBuildRet(builder, res);

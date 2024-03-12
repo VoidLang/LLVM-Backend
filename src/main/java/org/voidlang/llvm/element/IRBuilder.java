@@ -424,6 +424,18 @@ public class IRBuilder implements Disposable {
         return new IRValue(LLVMBuildFree(handle, pointer.getHandle()));
     }
 
+    public IRValue memCpy(IRValue dest, int destAlign, IRValue src, int srcAlign, IRValue size) {
+        return new IRValue(LLVMBuildMemCpy(handle, dest.getHandle(), destAlign, src.getHandle(), srcAlign, size.getHandle()));
+    }
+
+    public IRValue memMove(IRValue dest, int destAlign, IRValue src, int srcAlign, IRValue size) {
+        return new IRValue(LLVMBuildMemMove(handle, dest.getHandle(), destAlign, src.getHandle(), srcAlign, size.getHandle()));
+    }
+
+    public IRValue memSet(IRValue dest, IRValue value, IRValue size, int destAlign) {
+        return new IRValue(LLVMBuildMemSet(handle, dest.getHandle(), value.getHandle(), size.getHandle(), destAlign));
+    }
+
     public IRValue structMemberPointer(IRType type, IRValue instance, int memberIndex, String name) {
         return new IRValue(LLVMBuildStructGEP2(handle, type.getHandle(), instance.getHandle(), memberIndex, name));
     }

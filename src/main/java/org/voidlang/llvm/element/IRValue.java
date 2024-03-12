@@ -1,7 +1,7 @@
 package org.voidlang.llvm.element;
 
 import org.bytedeco.llvm.LLVM.LLVMValueRef;
-import org.bytedeco.llvm.global.LLVM;
+import static org.bytedeco.llvm.global.LLVM.*;
 
 public class IRValue {
     private final LLVMValueRef handle;
@@ -15,10 +15,14 @@ public class IRValue {
     }
 
     public IRType typeOf(IRContext context) {
-        return new IRType(LLVM.LLVMTypeOf(handle), context);
+        return new IRType(LLVMTypeOf(handle), context);
     }
 
     public IRType typeOf() {
         return typeOf(IRContext.global());
+    }
+
+    public int getAlignment() {
+        return LLVMGetAlignment(handle);
     }
 }

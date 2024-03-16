@@ -420,6 +420,14 @@ public class IRBuilder implements Disposable {
         return malloc(type, "");
     }
 
+    public IRValue mallocArray(IRType type, IRValue value, String name) {
+        return new IRValue(LLVMBuildArrayMalloc(handle, type.getHandle(), value.getHandle(), name));
+    }
+
+    public IRValue mallocArray(IRType type, IRValue value) {
+        return mallocArray(type, value, "");
+    }
+
     public IRValue free(IRValue pointer) {
         return new IRValue(LLVMBuildFree(handle, pointer.getHandle()));
     }
